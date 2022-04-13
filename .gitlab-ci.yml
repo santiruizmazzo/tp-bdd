@@ -1,0 +1,87 @@
+image: openjdk:17-jdk-alpine
+
+variables:
+  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
+
+before_script:
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+stages:
+  - build
+  - test
+  - package
+  - report
+  - deploy
+
+build:
+  stage: build
+  script:
+    - ./gradlew --build-cache assemble --info
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: push
+    paths:
+      - build
+      - .gradle
+
+unit-test:
+  stage: test
+  script:
+    - ./gradlew test --info
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+integration-test:
+  stage: test
+  script:
+    - echo "Integration Tests."
+    - sleep 10
+    - echo "PASS"
+    #- ./gradlew integrationTest --info
+  cache:
+    key: "$CI_COMMIT_REF_NAME"
+    policy: pull
+    paths:
+      - build
+      - .gradle
+
+ui-test:
+  stage: test
+  script:
+    - echo "UI Tests."
+    - sleep 10
+    - echo "PASS"
+
+acceptance-test:
+  stage: test
+  script:
+    - echo "Acceptance Tests."
+    - sleep 10
+    - echo "PASS"
+
+linting:
+  stage: test
+  script:
+    - echo "Linting code... This will take about 10 seconds."
+    - sleep 10
+    - echo "No lint issues found."
+
+package:
+  stage: package
+  script:
+    - echo "Packaging"
+
+report-tests:
+  stage: report
+  script:
+    - echo "Reporting tests"
+
+deploy-dev:
+  stage: deploy
+  script:
+    - echo "Deploying application to DEV..."
+    - echo "Application successfully deployed."

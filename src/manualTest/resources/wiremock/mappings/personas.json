@@ -1,0 +1,19 @@
+{
+  "priority": 10,
+  "request": {
+    "method": "GET",
+    "urlPathPattern": "/personas/([a-zA-Z]*)"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "id": "{{request.pathSegments.[1]}}",
+      "correo": "mail@repartir.com",
+      "nombre": "Usuario",
+      "documento": "11111111"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

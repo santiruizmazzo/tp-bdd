@@ -1,0 +1,19 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "GET",
+    "url": "/personas/mariano"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "id": "mariano",
+      "correo": "mariano@repartir.com",
+      "nombre": "Mariano Ruiz",
+      "documento": "28654678"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

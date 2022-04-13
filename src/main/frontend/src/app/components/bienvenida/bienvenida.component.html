@@ -1,0 +1,22 @@
+<p-dialog id="iniciarDialog" [(visible)]="mostrar" [modal]="true" position="center"
+          [closable]="false" [resizable]="false" [draggable]="true">
+  <div class="p-fluid">
+    <div class="field">
+      <div class="pl-4 text-5xl font-bold text-left">
+        Repartir
+        <i class="p-4 pi pi-angle-double-left text-5xl"></i>
+      </div>
+    </div>
+    <div class="field">
+      <span class="p-float-label">
+        <input id="usuarioInput" type="text" class="inputfield" pInputText [(ngModel)]="nombre"/>
+        <label for="usuarioInput">Usuario</label>
+      </span>
+    </div>
+  </div>
+  <p-footer>
+    <p-button id="iniciarBienvenidaButton" label="Iniciar" (onClick)="iniciar()"
+              icon="pi pi-check"
+              styleClass="p-button-secondary p-button-lg p-button-rounded"></p-button>
+  </p-footer>
+</p-dialog>

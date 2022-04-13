@@ -1,0 +1,90 @@
+plugins {
+	id 'org.springframework.boot' version '2.5.2'
+	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
+	id 'java'
+	id 'org.unbroken-dome.test-sets' version '4.0.0'
+	id "org.flywaydb.flyway" version '7.11.3'
+}
+
+group = 'ar.com.grupoesfera'
+version = '1.0'
+sourceCompatibility = '17'
+
+repositories {
+	mavenCentral()
+}
+
+testSets {
+	integrationTest
+	uiTest
+	acceptanceTest
+	manualTest
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+	implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
+	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.0.6'
+
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	integrationTestImplementation 'org.flywaydb:flyway-core:7.11.3'
+	integrationTestImplementation 'io.rest-assured:rest-assured:4.4.0'
+	integrationTestImplementation 'net.javacrumbs.json-unit:json-unit:2.27.0'
+	integrationTestImplementation "org.testcontainers:junit-jupiter:1.15.2"
+	integrationTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'
+
+	uiTestImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+	uiTestImplementation 'io.github.bonigarcia:webdrivermanager:4.4.3'
+	uiTestImplementation sourceSets.integrationTest.output
+
+	acceptanceTestImplementation 'io.cucumber:cucumber-java:6.10.4'
+	acceptanceTestImplementation 'io.cucumber:cucumber-junit-platform-engine:6.10.4'
+	acceptanceTestImplementation 'io.cucumber:cucumber-spring:6.10.4'
+	acceptanceTestImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
+	acceptanceTestImplementation 'io.github.bonigarcia:webdrivermanager:4.4.3'
+	acceptanceTestImplementation 'org.flywaydb:flyway-core:7.11.3'
+	acceptanceTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'
+
+	manualTestImplementation 'org.flywaydb:flyway-core:7.11.3'
+	manualTestImplementation "org.testcontainers:junit-jupiter:1.15.2"
+	manualTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'
+}
+
+test {
+	useJUnitPlatform()
+}
+
+integrationTest {
+	useJUnitPlatform()
+	mustRunAfter test
+}
+
+uiTest {
+	useJUnitPlatform()
+	mustRunAfter integrationTest
+}
+
+acceptanceTest {
+	useJUnitPlatform()
+	mustRunAfter uiTest
+}
+
+check {
+	dependsOn integrationTest
+	dependsOn uiTest
+	dependsOn acceptanceTest
+}
+
+flyway {
+	user = 'repartirUser'
+	password = 'repartirPassword'
+	url = 'jdbc:mariadb://localhost:3306/repartir'
+	locations = [ 'filesystem:src/main/db/migrations' ]
+}
+
+bootRun {
+	systemProperty "spring.profiles.active", "manualTest"
+	classpath = sourceSets.manualTest.runtimeClasspath
+}

@@ -1,0 +1,19 @@
+{
+  "priority": 1,
+  "request": {
+    "method": "GET",
+    "url": "/personas/laura"
+  },
+  "response": {
+    "status": 200,
+    "jsonBody": {
+      "id": "laura",
+      "correo": "laura@repartir.com",
+      "nombre": "Laura Lopez",
+      "documento": "56786543"
+    },
+    "headers": {
+      "Content-Type": "application/json"
+    }
+  }
+}

@@ -1,0 +1,36 @@
+<p-card header="Grupos">
+  <p-table [value]="lista"  styleClass="p-datatable-striped" [autoLayout]="true">
+    <ng-template pTemplate="header">
+      <tr>
+        <th class="text-center text-primary">id</th>
+        <th class="text-center">nombre</th>
+        <th class="text-center">total</th>
+        <th class="text-center">miembros</th>
+        <th class="text-center">gastos</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-grupo>
+      <tr>
+        <td class="text-primary">{{grupo.id}}</td>
+        <td>{{grupo.nombre}}</td>
+        <td class="text-right">{{grupo.total | currency}}</td>
+        <td>
+          <p-chip *ngFor="let miembro of grupo.miembros" [label]="miembro" icon="pi pi-user" styleClass="m-1"></p-chip>
+        </td>
+        <td>
+          <p-button [id]="'agregarGastoGruposButton-' + grupo.id" icon="pi pi-plus" (onClick)="agregarGasto(grupo)" styleClass="p-button-secondary p-button-rounded"></p-button>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+
+  <ng-template pTemplate="footer">
+    <p-button id="crearGruposButton" label="Crear" icon="pi pi-plus" (onClick)="crear()"></p-button>
+  </ng-template>
+</p-card>
+
+<app-grupo-nuevo>
+</app-grupo-nuevo>
+
+<app-gasto-nuevo>
+</app-gasto-nuevo>

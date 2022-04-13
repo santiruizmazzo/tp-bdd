@@ -1,0 +1,15 @@
+<div class="card" *ngIf="usuario">
+    <div class="card-container flex align-items-center justify-content-start">
+        <div class="w-4rem h-4rem bg-pink-400 text-white font-bold flex align-items-center justify-content-center p-4 border-round mr-3 shadow-2">
+            <i class="pi pi-user text-5xl"></i>
+        </div>
+        <div class="w-20rem h-4rem surface-200 text-primary flex align-items-center justify-content-left p-4 border-round mr-3  shadow-2">
+            {{usuario.id}}
+            <br/>
+            {{usuario.correo}}
+        </div>
+    </div>
+</div>
+
+<app-bienvenida>
+</app-bienvenida>

@@ -1,84 +1,108 @@
 image: openjdk:17-jdk-alpine
 
 variables:
-  GRADLE_OPTS: "-Dorg.gradle.daemon=false"
-
-before_script:
-  - export GRADLE_USER_HOME=`pwd`/.gradle
+  GRADLE_OPTS: "-Dorg.gradle.daemon=true -Dorg.gradle.caching=true"
 
 stages:
   - build
+  - analyze
   - test
-  - package
   - report
+  - package
   - deploy
+
+before_script:
+  - export GRADLE_USER_HOME=cache/
+
+cache:
+  paths:
+    - cache/caches/
+    - cache/notifications/
+    - cache/wrapper/
+    - cache/build-cache/
 
 build:
   stage: build
   script:
     - ./gradlew --build-cache assemble --info
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: push
+  artifacts:
+    when: on_success
     paths:
-      - build
-      - .gradle
+      - build/classes
 
 unit-test:
   stage: test
   script:
     - ./gradlew test --info
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: pull
+  artifacts:
+    when: always
+    reports:
+      junit: build/test-results/test/**/TEST-*.xml
     paths:
-      - build
-      - .gradle
+      - build/jacoco
+      - build/reports/tests/test
 
 integration-test:
   stage: test
   script:
-    - echo "Integration Tests."
-    - sleep 10
-    - echo "PASS"
-    #- ./gradlew integrationTest --info
-  cache:
-    key: "$CI_COMMIT_REF_NAME"
-    policy: pull
+    - ./gradlew integrationTest --info
+  artifacts:
+    when: always
+    reports:
+      junit: build/test-results/integrationTest/**/TEST-*.xml
     paths:
-      - build
-      - .gradle
+      - build/jacoco
+      - build/reports/tests/integrationTest
 
 ui-test:
   stage: test
   script:
-    - echo "UI Tests."
-    - sleep 10
-    - echo "PASS"
+    - export CHROME_OPTIONS=--headless
+    - ./gradlew uiTest --info
+  artifacts:
+    when: always
+    reports:
+      junit: build/test-results/uiTest/**/TEST-*.xml
+    paths:
+      - build/jacoco
+      - build/reports/tests/uiTest
 
 acceptance-test:
   stage: test
   script:
-    - echo "Acceptance Tests."
-    - sleep 10
-    - echo "PASS"
-
-linting:
-  stage: test
-  script:
-    - echo "Linting code... This will take about 10 seconds."
-    - sleep 10
-    - echo "No lint issues found."
+    - export CHROME_OPTIONS=--headless
+    - ./gradlew acceptanceTest --info
+  artifacts:
+    when: always
+    reports:
+      junit: build/test-results/acceptanceTest/**/TEST-*.xml
+    paths:
+      - build/jacoco
+      - build/reports/tests/acceptanceTest
+      - build/reports/acceptance.html
 
 package:
   stage: package
   script:
     - echo "Packaging"
 
-report-tests:
+report-test-coverage:
   stage: report
   script:
-    - echo "Reporting tests"
+    - ./gradlew jacocoTestReport --info
+  artifacts:
+    when: always
+    paths:
+      - build/reports/jacoco
+
+static-source-code-analysis:
+  stage: analyze
+  script:
+    - ./gradlew pmdMain
+  artifacts:
+    when: always
+    paths:
+      - build/reports/pmd
 
 deploy-dev:
   stage: deploy

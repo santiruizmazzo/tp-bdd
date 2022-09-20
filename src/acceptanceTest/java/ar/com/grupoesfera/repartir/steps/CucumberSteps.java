@@ -1,9 +1,7 @@
 package ar.com.grupoesfera.repartir.steps;
 
 import ar.com.grupoesfera.repartir.atest.BaseDeDatosFixture;
-import io.cucumber.java.Before;
 import io.cucumber.spring.CucumberContextConfiguration;
-import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.WebDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;

@@ -12,12 +12,10 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
-
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElement;
 public class CompuestosPorAlMenosDosMiembrosSteps extends CucumberSteps {
 
     private List<String> miembros;
-
-    private String mensaje;
 
     @Cuando("el usuario crea un grupo indicando que sus miembros son {miembros}")
     public void elUsuarioCreaUnGrupoIndicandoQueSusMiembrosSon(List<String> miembros) {
@@ -64,9 +62,6 @@ public class CompuestosPorAlMenosDosMiembrosSteps extends CucumberSteps {
         miembrosInput.sendKeys("Oscar");
         miembrosInput.sendKeys(Keys.ENTER);
         driver.findElement(By.id("guardarGrupoNuevoButton")).click();
-
-        var wait = new WebDriverWait(driver, 5);
-        mensaje = wait.until(visibilityOfElementLocated(By.id("mensajesToast"))).getText();
     }
 
     @Entonces("no debería crear el grupo con un único miembro")
@@ -78,6 +73,13 @@ public class CompuestosPorAlMenosDosMiembrosSteps extends CucumberSteps {
     @Y("debería ser informado que necesita tener al menos dos miembros")
     public void deberiaSerInformadoQueNecesitaTenerAlMenosDosMiembros() {
 
-        assertThat(mensaje).contains("Error", "No se puede guardar");
+        var wait = new WebDriverWait(driver, 2);
+        var mensajesToast = wait.withMessage("Mostro Toast")
+                .until(visibilityOfElementLocated(By.id("mensajesToast")));
+        wait.withMessage("Título del Toast es 'Error'")
+                .until(textToBePresentInElement(mensajesToast, "Error"));
+        assertThat(mensajesToast.getText())
+                .as("Descripción del Toast")
+                .contains("No se puede guardar");
     }
 }

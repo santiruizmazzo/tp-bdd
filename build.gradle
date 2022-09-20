@@ -26,6 +26,7 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.mariadb.jdbc:mariadb-java-client:2.7.2'
 	implementation 'org.springframework.cloud:spring-cloud-starter-openfeign:3.0.6'
+	implementation 'org.springdoc:springdoc-openapi-ui:1.6.4'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 
@@ -45,10 +46,11 @@ dependencies {
 	acceptanceTestImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 	acceptanceTestImplementation 'io.github.bonigarcia:webdrivermanager:4.4.3'
 	acceptanceTestImplementation 'org.flywaydb:flyway-core:7.11.3'
+	acceptanceTestImplementation 'org.testcontainers:junit-jupiter:1.15.2'
 	acceptanceTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'
 
 	manualTestImplementation 'org.flywaydb:flyway-core:7.11.3'
-	manualTestImplementation "org.testcontainers:junit-jupiter:1.15.2"
+	manualTestImplementation 'org.testcontainers:junit-jupiter:1.15.2'
 	manualTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'
 }
 
@@ -64,11 +66,13 @@ integrationTest {
 uiTest {
 	useJUnitPlatform()
 	mustRunAfter integrationTest
+	systemProperties = System.properties
 }
 
 acceptanceTest {
 	useJUnitPlatform()
 	mustRunAfter uiTest
+	systemProperties = System.properties
 }
 
 check {

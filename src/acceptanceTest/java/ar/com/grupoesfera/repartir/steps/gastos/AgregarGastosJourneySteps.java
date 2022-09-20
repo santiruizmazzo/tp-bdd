@@ -22,7 +22,8 @@ public class AgregarGastosJourneySteps extends CucumberSteps {
     @Step("el usuario selecciona agregar gasto al grupo #{int}")
     public void elUsuarioSeleccionaAgregarGastoAlGrupo(int idGrupo) {
 
-        var agregarGastoButton = driver.findElement(By.id("agregarGastoGruposButton-" + idGrupo));
+        var wait = new WebDriverWait(driver, 2);
+        var agregarGastoButton = wait.until(visibilityOfElementLocated(By.id("agregarGastoGruposButton-" + idGrupo)));
         agregarGastoButton.click();
     }
 

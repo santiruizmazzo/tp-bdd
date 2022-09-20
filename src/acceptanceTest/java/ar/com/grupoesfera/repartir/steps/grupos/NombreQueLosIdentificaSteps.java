@@ -9,19 +9,21 @@ import org.openqa.selenium.Keys;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.openqa.selenium.support.ui.ExpectedConditions.textToBePresentInElement;
 import static org.openqa.selenium.support.ui.ExpectedConditions.visibilityOfElementLocated;
+import static org.openqa.selenium.support.ui.ExpectedConditions.elementToBeClickable;
 
 public class NombreQueLosIdentificaSteps extends CucumberSteps {
 
     private String nombreIndicado;
-    private String mensaje;
 
     @Cuando("el usuario crea un grupo indicando el nombre {string}")
     public void elUsuarioCreaUnGrupoIndicandoElNombre(String nombre) {
 
         nombreIndicado = nombre;
 
-        var crearGruposButton = driver.findElement(By.id("crearGruposButton"));
+        var wait = new WebDriverWait(driver, 2);
+        var crearGruposButton = wait.until(elementToBeClickable(By.id("crearGruposButton")));
         crearGruposButton.click();
 
         driver.findElement(By.id("nombreGrupoNuevoInput")).sendKeys(nombreIndicado);
@@ -34,7 +36,6 @@ public class NombreQueLosIdentificaSteps extends CucumberSteps {
 
         driver.findElement(By.id("guardarGrupoNuevoButton")).click();
 
-        var wait = new WebDriverWait(driver, 2);
         wait.until(visibilityOfElementLocated(By.id("mensajesToast")));
     }
 
@@ -62,9 +63,6 @@ public class NombreQueLosIdentificaSteps extends CucumberSteps {
         miembrosInput.sendKeys(Keys.ENTER);
 
         driver.findElement(By.id("guardarGrupoNuevoButton")).click();
-
-        var wait = new WebDriverWait(driver, 2);
-        mensaje = wait.until(visibilityOfElementLocated(By.id("mensajesToast"))).getText();
     }
 
     @Entonces("no debería crear el grupo sin nombre")
@@ -76,7 +74,14 @@ public class NombreQueLosIdentificaSteps extends CucumberSteps {
     @Y("debería ser informado que no puede crear un grupo sin nombre")
     public void deberiaSerInformadoQueNoPuedeCrearUnGrupoSinNombre() {
 
-        assertThat(mensaje).contains("Error", "No se puede guardar");
+        var wait = new WebDriverWait(driver, 2);
+        var mensajesToast = wait.withMessage("Mostro Toast")
+                .until(visibilityOfElementLocated(By.id("mensajesToast")));
+        wait.withMessage("Título del Toast es 'Error'")
+                .until(textToBePresentInElement(mensajesToast, "Error"));
+        assertThat(mensajesToast.getText())
+                .as("Descripción del Toast")
+                .contains("No se puede guardar");
     }
 
 }

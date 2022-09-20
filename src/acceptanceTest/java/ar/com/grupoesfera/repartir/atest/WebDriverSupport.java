@@ -3,6 +3,8 @@ package ar.com.grupoesfera.repartir.atest;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
@@ -16,13 +18,19 @@ public class WebDriverSupport {
 
     private WebDriver driver;
 
+    @Value("${CHROME_OPTIONS:}")
+    String[] environmentalOptions;
+
     @PostConstruct
     public void start() {
 
         WebDriverManager.chromedriver()
                 .setup();
 
-        driver = new ChromeDriver();
+        var options = new ChromeOptions();
+        options.addArguments("start-maximized");
+        options.addArguments(environmentalOptions);
+        driver = new ChromeDriver(options);
     }
 
     @Bean

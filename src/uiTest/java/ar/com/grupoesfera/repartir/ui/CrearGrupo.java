@@ -26,7 +26,7 @@ public class CrearGrupo extends UITest {
                   .tipearMiembro("roberto");
         gruposPage.clickEnGuardar();
 
-        var notificacion = gruposPage.leerNotificacion();
+        var notificacion = gruposPage.leerNotificacionExito();
         assertThat(notificacion).contains("Éxito", "Grupo '#10 null' creado");
 
         comprobarQueSeRecibieronLosDatosDelGrupo("After Office", "pablo", "maria", "roberto");
@@ -57,7 +57,7 @@ public class CrearGrupo extends UITest {
         gruposPage.tipearMiembro("luis");
         gruposPage.clickEnGuardar();
 
-        var notificacion = gruposPage.leerNotificacion();
+        var notificacion = gruposPage.leerNotificacionError();
         assertThat(notificacion)
                 .contains("Error", "No se puede guardar");
 

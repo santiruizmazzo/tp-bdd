@@ -4,13 +4,14 @@
 
  * JDK 17
  * Docker
+ * Chrome
 
 ## Ejecutar pruebas
 
 Para ejecutar todas las pruebas
 
 ```
-./gradlew check
+./gradlew check --info
 ```
 
 ## Para levantar en el ambiente local

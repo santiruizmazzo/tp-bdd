@@ -29,10 +29,14 @@ public class GruposService {
     public Grupo crear(Grupo nuevoGrupo) {
 
         validar(nuevoGrupo);
-        montos.inicializarTotal(nuevoGrupo);
-        repository.save(nuevoGrupo);
+        guardar(nuevoGrupo);
 
         return nuevoGrupo;
+    }
+
+    private void guardar(Grupo nuevoGrupo) {
+        montos.inicializarTotal(nuevoGrupo);
+        repository.save(nuevoGrupo);
     }
 
     private void validar(Grupo nuevoGrupo) {

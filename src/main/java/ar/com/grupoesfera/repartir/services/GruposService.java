@@ -28,6 +28,14 @@ public class GruposService {
 
     public Grupo crear(Grupo nuevoGrupo) {
 
+        validar(nuevoGrupo);
+        montos.inicializarTotal(nuevoGrupo);
+        repository.save(nuevoGrupo);
+
+        return nuevoGrupo;
+    }
+
+    private void validar(Grupo nuevoGrupo) {
         if (!nuevoGrupo.estaFormado()) {
             throw new GrupoInvalidoException();
         }
@@ -36,10 +44,6 @@ public class GruposService {
             throw new GrupoInvalidoException();
 
         }
-        montos.inicializarTotal(nuevoGrupo);
-        repository.save(nuevoGrupo);
-
-        return nuevoGrupo;
     }
 
     public Grupo recuperar(Long id) {

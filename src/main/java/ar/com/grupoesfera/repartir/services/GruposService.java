@@ -26,20 +26,20 @@ public class GruposService {
         return  repository.findAll();
     }
 
-    public Grupo crear(Grupo grupo) {
+    public Grupo crear(Grupo nuevoGrupo) {
 
-        if (!grupo.estaFormado()) {
+        if (!nuevoGrupo.estaFormado()) {
             throw new GrupoInvalidoException();
         }
 
-        if (Strings.isBlank(grupo.getNombre())) {
+        if (Strings.isBlank(nuevoGrupo.getNombre())) {
             throw new GrupoInvalidoException();
 
         }
-        montos.inicializarTotal(grupo);
-        repository.save(grupo);
+        montos.inicializarTotal(nuevoGrupo);
+        repository.save(nuevoGrupo);
 
-        return grupo;
+        return nuevoGrupo;
     }
 
     public Grupo recuperar(Long id) {

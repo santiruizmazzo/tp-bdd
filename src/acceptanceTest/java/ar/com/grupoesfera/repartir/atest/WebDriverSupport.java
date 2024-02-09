@@ -25,6 +25,7 @@ public class WebDriverSupport {
     public void start() {
 
         WebDriverManager.chromedriver()
+                .clearDriverCache()
                 .setup();
 
         var options = new ChromeOptions();

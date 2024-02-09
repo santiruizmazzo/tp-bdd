@@ -22,6 +22,7 @@ public class WebDriverSupport {
     public void downloadWebDriver() {
 
         WebDriverManager.chromedriver()
+                .clearDriverCache()
                 .setup();
     }
 

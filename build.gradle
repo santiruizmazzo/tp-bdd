@@ -40,6 +40,7 @@ dependencies {
 
 	uiTestImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
 	uiTestImplementation 'io.github.bonigarcia:webdrivermanager:5.6.3'
+	uiTestImplementation 'org.apache.httpcomponents.client5:httpclient5:5.2.1'
 	uiTestImplementation sourceSets.integrationTest.output
 
 	acceptanceTestImplementation 'io.cucumber:cucumber-java:6.10.4'
@@ -49,6 +50,7 @@ dependencies {
 	acceptanceTestImplementation 'io.github.bonigarcia:webdrivermanager:5.6.3'
 	acceptanceTestImplementation 'org.flywaydb:flyway-core:7.11.3'
 	acceptanceTestImplementation 'org.testcontainers:junit-jupiter:1.15.2'
+	acceptanceTestImplementation'org.apache.httpcomponents.client5:httpclient5:5.2.1'
 	acceptanceTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'
 
 	manualTestImplementation 'org.flywaydb:flyway-core:7.11.3'

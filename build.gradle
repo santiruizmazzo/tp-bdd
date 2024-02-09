@@ -39,14 +39,14 @@ dependencies {
 	integrationTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'
 
 	uiTestImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
-	uiTestImplementation 'io.github.bonigarcia:webdrivermanager:4.4.3'
+	uiTestImplementation 'io.github.bonigarcia:webdrivermanager:5.6.3'
 	uiTestImplementation sourceSets.integrationTest.output
 
 	acceptanceTestImplementation 'io.cucumber:cucumber-java:6.10.4'
 	acceptanceTestImplementation 'io.cucumber:cucumber-junit-platform-engine:6.10.4'
 	acceptanceTestImplementation 'io.cucumber:cucumber-spring:6.10.4'
 	acceptanceTestImplementation 'org.seleniumhq.selenium:selenium-java:3.141.59'
-	acceptanceTestImplementation 'io.github.bonigarcia:webdrivermanager:4.4.3'
+	acceptanceTestImplementation 'io.github.bonigarcia:webdrivermanager:5.6.3'
 	acceptanceTestImplementation 'org.flywaydb:flyway-core:7.11.3'
 	acceptanceTestImplementation 'org.testcontainers:junit-jupiter:1.15.2'
 	acceptanceTestRuntimeOnly 'org.testcontainers:mariadb:1.15.2'

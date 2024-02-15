@@ -78,7 +78,9 @@ acceptance-test:
       ./gradlew acceptanceTest --info || FAILED=true
       if [$FAILED]
         echo "Ocurrió un error ejecutando las pruebas de aceptación."
-        then ls -lR cache/webdriver/
+        then
+          whoami
+          ls -lR cache/webdriver/
       fi
   artifacts:
     when: always

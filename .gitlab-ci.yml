@@ -74,7 +74,12 @@ acceptance-test:
   script:
     - export CHROME_OPTIONS=--headless
     - export WDM_CACHEPATH=cache/webdriver/
-    - ./gradlew acceptanceTest --info
+    - |
+      ./gradlew acceptanceTest --info || FAILED=true
+      if [$FAILED]
+        echo "Ocurrió un error ejecutando las pruebas de aceptación."
+        then ls -l cache/webdriver
+      fi
   artifacts:
     when: always
     reports:

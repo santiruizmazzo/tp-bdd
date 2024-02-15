@@ -20,6 +20,7 @@ cache:
     - cache/notifications/
     - cache/wrapper/
     - cache/build-cache/
+    - cache/webdriver/
 
 build:
   stage: build
@@ -58,6 +59,7 @@ ui-test:
   stage: test
   script:
     - export CHROME_OPTIONS=--headless
+    - export WDM_CACHEPATH=cache/webdriver/
     - ./gradlew uiTest --info
   artifacts:
     when: always
@@ -71,6 +73,7 @@ acceptance-test:
   stage: test
   script:
     - export CHROME_OPTIONS=--headless
+    - export WDM_CACHEPATH=cache/webdriver/
     - ./gradlew acceptanceTest --info
   artifacts:
     when: always

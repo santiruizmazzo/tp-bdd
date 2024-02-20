@@ -79,7 +79,7 @@ acceptance-test:
       if [$FAILED]
         echo "Ocurrió un error ejecutando las pruebas de aceptación."
         then     
-          pwd
+          /builds/grupo-esfera/capacitacion/recursos/repartir/cache/webdriver/chromedriver/linux64/121.0.6167.85/chromedriver -h
           ls -lR cache/webdriver/
       fi
   artifacts:

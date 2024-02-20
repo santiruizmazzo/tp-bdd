@@ -80,7 +80,7 @@ acceptance-test:
         echo "Ocurrió un error ejecutando las pruebas de aceptación."
         then
           ls -lR cache/webdriver/
-          cache/webdriver/chromedriver/linux64/121.0.6167.85/chromedriver -h
+          cache/webdriver/chromedriver/linux64/121.0.6167.184/chromedriver -h
           
       fi
   artifacts:

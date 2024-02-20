@@ -78,9 +78,10 @@ acceptance-test:
       ./gradlew acceptanceTest --info || FAILED=true
       if [$FAILED]
         echo "Ocurrió un error ejecutando las pruebas de aceptación."
-        then     
-          /builds/grupo-esfera/capacitacion/recursos/repartir/cache/webdriver/chromedriver/linux64/121.0.6167.85/chromedriver -h
+        then
           ls -lR cache/webdriver/
+          cache/webdriver/chromedriver/linux64/121.0.6167.85/chromedriver -h
+          
       fi
   artifacts:
     when: always

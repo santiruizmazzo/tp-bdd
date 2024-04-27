@@ -17,8 +17,10 @@ repositories {
 }
 
 testSets {
+	fastAcceptanceTest
 	integrationTest
 	uiTest
+	fastAcceptanceTest
 	acceptanceTest
 	manualTest
 }
@@ -31,6 +33,11 @@ dependencies {
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.4'
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+	fastAcceptanceTestImplementation 'io.cucumber:cucumber-java:6.10.4'
+	fastAcceptanceTestImplementation 'io.cucumber:cucumber-junit-platform-engine:6.10.4'
+	fastAcceptanceTestImplementation 'io.cucumber:cucumber-spring:6.10.4'
+	fastAcceptanceTestImplementation 'org.flywaydb:flyway-core:7.11.3'
 
 	integrationTestImplementation 'org.flywaydb:flyway-core:7.11.3'
 	integrationTestImplementation 'io.rest-assured:rest-assured:4.4.0'
@@ -62,9 +69,14 @@ test {
 	useJUnitPlatform()
 }
 
-integrationTest {
+fastAcceptanceTest {
 	useJUnitPlatform()
 	mustRunAfter test
+}
+
+integrationTest {
+	useJUnitPlatform()
+	mustRunAfter fastAcceptanceTest
 }
 
 uiTest {
@@ -80,6 +92,7 @@ acceptanceTest {
 }
 
 check {
+	dependsOn fastAcceptanceTest
 	dependsOn integrationTest
 	dependsOn uiTest
 	dependsOn acceptanceTest

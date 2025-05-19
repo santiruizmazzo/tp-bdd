@@ -70,6 +70,7 @@ class GrupoTest {
     void lanzaExcepcionCuandoElTotalEsNegativo() {
 
         Grupo grupo = new Grupo();
+        grupo.setTotal(BigDecimal.valueOf(0));
         assertThatThrownBy(() -> grupo.setTotal(BigDecimal.valueOf(-5)))
                 .isInstanceOf(TotalNegativoException.class);
         assertThat(grupo.getTotal()).isEqualTo(BigDecimal.ZERO);

@@ -30,7 +30,6 @@ public class Grupo {
     private BigDecimal total;
 
     public Grupo() {
-        this.total = BigDecimal.ZERO;
     }
 
     public Grupo(long id) {

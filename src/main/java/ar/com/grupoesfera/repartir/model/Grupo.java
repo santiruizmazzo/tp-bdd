@@ -1,6 +1,7 @@
 package ar.com.grupoesfera.repartir.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import ar.com.grupoesfera.repartir.exceptions.TotalNegativoException;
 
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
@@ -29,6 +30,7 @@ public class Grupo {
     private BigDecimal total;
 
     public Grupo() {
+        this.total = BigDecimal.ZERO;
     }
 
     public Grupo(long id) {
@@ -64,6 +66,10 @@ public class Grupo {
     }
 
     public void setTotal(BigDecimal total) {
+        if (total.compareTo(BigDecimal.ZERO) < 0) {
+            throw new TotalNegativoException();
+        }
+
         this.total = total;
     }
 

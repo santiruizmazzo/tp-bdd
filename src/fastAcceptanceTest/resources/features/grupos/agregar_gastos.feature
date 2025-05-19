@@ -1,5 +1,4 @@
 # language: es
-@wip
 Característica: Agregar gastos a un grupo
 
   Regla: El total de un grupo no debe ser negativo

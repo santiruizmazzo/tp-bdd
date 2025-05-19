@@ -2,9 +2,12 @@ package ar.com.grupoesfera.repartir.model;
 
 import org.junit.jupiter.api.Test;
 
+import java.math.BigDecimal;
 import java.util.Arrays;
 
 import static org.assertj.core.api.Assertions.*;
+
+import ar.com.grupoesfera.repartir.exceptions.TotalNegativoException;
 
 class GrupoTest {
 
@@ -61,5 +64,16 @@ class GrupoTest {
         grupo.setMiembros(null);
 
         assertThat(grupo.estaFormado()).isFalse();
+    }
+
+    @Test
+    void lanzaExcepcionCuandoElTotalEsNegativo() {
+
+        Grupo grupo = new Grupo();
+
+        grupo.setTotal(BigDecimal.valueOf(-5));
+        assertThatThrownBy(() -> grupo.setTotal(BigDecimal.valueOf(-5)))
+                .isInstanceOf(TotalNegativoException.class);
+        assertThat(grupo.getTotal()).isEqualTo(BigDecimal.ZERO);
     }
 }

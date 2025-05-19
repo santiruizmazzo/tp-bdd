@@ -1,5 +1,6 @@
 package ar.com.grupoesfera.repartir.steps.grupos;
 
+import ar.com.grupoesfera.repartir.exceptions.TotalNegativoException;
 import ar.com.grupoesfera.repartir.model.Grupo;
 import ar.com.grupoesfera.repartir.steps.FastCucumberSteps;
 import io.cucumber.java.es.Cuando;
@@ -34,7 +35,7 @@ public class TotalNoDebeSerNegativoSteps extends FastCucumberSteps {
 
     @Entonces("el total del grupo debe seguir siendo {int}")
     public void elTotalDelGrupoDebeSeguirSiendo(int total) {
-        assertThat( this.grupo.getTotal() == total);
-        assertThat( excepcion == new TotalNegativoException(-5));
+        assertThat(this.grupo.getTotal()).isEqualTo(BigDecimal.valueOf(total));
+        assertThat(excepcion).isInstanceOf(TotalNegativoException.class);
     }
 }

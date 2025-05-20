@@ -5,6 +5,7 @@ import ar.com.grupoesfera.repartir.model.Gasto;
 import ar.com.grupoesfera.repartir.model.Grupo;
 import ar.com.grupoesfera.repartir.repositories.GruposRepository;
 import ar.com.grupoesfera.repartir.exceptions.GrupoNoEncontradoException;
+import ar.com.grupoesfera.repartir.exceptions.TotalNegativoException;
 import ar.com.grupoesfera.repartir.services.GruposService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/grupos")
@@ -84,9 +86,9 @@ public class GruposController {
     }
 
     @PostMapping("/{id}/gastos")
-    public ResponseEntity<Grupo> agregarGasto(@PathVariable Long id, @RequestBody Gasto gasto) {
+    public ResponseEntity agregarGasto(@PathVariable Long id, @RequestBody Gasto gasto) {
 
-        ResponseEntity<Grupo> response;
+        ResponseEntity response;
 
         try {
 
@@ -97,6 +99,10 @@ public class GruposController {
         } catch (GrupoNoEncontradoException e) {
 
             response = ResponseEntity.notFound().build();
+
+        } catch (TotalNegativoException e) {
+
+            response = ResponseEntity.status(403).body(Map.of("detail", "un grupo no puede tener un total negativo"));
 
         } catch (Exception e) {
 

@@ -2,6 +2,7 @@ package ar.com.grupoesfera.repartir.services;
 
 import static org.assertj.core.api.Assertions.*;
 
+import ar.com.grupoesfera.repartir.exceptions.GastoNegativoException;
 import ar.com.grupoesfera.repartir.model.Gasto;
 import ar.com.grupoesfera.repartir.model.Grupo;
 import org.junit.jupiter.api.BeforeEach;
@@ -46,5 +47,18 @@ class MontosServiceTest {
         montos.acumularAlTotal(grupo, gasto);
 
         assertThat(grupo.getTotal()).isEqualTo($(324,41));
+    }
+
+    @Test
+    void gastoNegativoNoAcumulaAlTotalDelGrupo() {
+
+        Grupo grupo = new Grupo();
+        grupo.setTotal($(200,0));
+
+        Gasto gasto = new Gasto();
+        gasto.setMonto($(-50,0));
+
+        assertThatThrownBy(() -> montos.acumularAlTotal(grupo, gasto))
+                .isInstanceOf(GastoNegativoException.class);
     }
 }

@@ -36,6 +36,10 @@ public class TotalNoDebeSerNegativoSteps extends FastCucumberSteps {
     @Entonces("el total del grupo debe seguir siendo {int}")
     public void elTotalDelGrupoDebeSeguirSiendo(int total) {
         assertThat(grupo.getTotal()).isEqualTo(BigDecimal.valueOf(total));
+    }
+
+    @Entonces("el sistema debe rechazar el gasto")
+    public void elSistemaDebeRechazarElGasto() {
         assertThat(excepcion).isInstanceOf(TotalNegativoException.class);
     }
 }
